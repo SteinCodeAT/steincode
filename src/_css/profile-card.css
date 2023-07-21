@@ -1,0 +1,118 @@
+.profile-card-column {
+    padding-bottom: 1rem;
+}
+
+.profile-card {
+    height: 100%;
+    padding: 2rem;
+    
+    margin: auto;
+    border: 1px solid var(--main-text);
+    background: linear-gradient(0deg,#e8e8e8 1%,transparent);
+}
+
+.profile-card--header {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr 3fr;
+    gap: 2rem;
+}
+
+.profile-card-name {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: calc(1.25rem + .3vw);
+}
+
+.profile-card-header-link {
+    text-decoration: none;
+    color: unset;
+    padding: 0;
+}
+
+.profile-card-header-link:hover {
+    text-decoration: underline;
+    background: unset;
+    color: unset;
+    box-shadow: unset;
+}
+
+.profile-card--body {
+    padding-top: 2rem
+}
+
+.profile-card--body--element:not(:last-of-type) {
+    margin-bottom: 2rem;
+}
+
+:root.dark-mode .profile-card {
+    border: 1px solid var(--accent);
+    background: linear-gradient(0deg,var(--main-bg) 5%,transparent);
+}
+
+.profile-card .profile-card-header-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-card .profile-card-image {
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border: 1px solid black;
+    aspect-ratio: 1 / 1;
+    height: 6rem;
+    margin: auto;
+}
+
+.profile-card .card-footer {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: start;
+}
+
+.profile-card .card-footer a {
+    color: var(--main-highlight);
+}
+
+.profile-card .card-footer a:hover {
+    color: var(--accent);
+}
+
+.profile-occupation.mobile {
+    display: block;
+}
+.profile-occupation.desktop {
+    display: none;
+}
+
+.social-media-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.social-media-link:hover {
+    background: none;
+    color: var(--accent);
+    box-shadow: none;
+}
+
+.social-media-link svg {
+    transition: scale 0.25s;
+}
+
+.social-media-link:hover svg {
+    scale: 1.5;
+    transition: scale 0.25s;
+}
+
+@media (min-width: 768px) {
+    .profile-card .profile-image {
+        max-height: 7rem;
+    }
+    .profile-occupation.mobile {
+        display: none;
+    }
+    .profile-occupation.desktop {
+        display: block;
+    }
+}

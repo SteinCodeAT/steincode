@@ -1,0 +1,159 @@
+---
+
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+        <meta name="generator" content="{{ eleventy.generator }}">
+        
+        <title>
+            {%- if site.title -%}
+                SteinCode - {{ site.title }}
+            {%- elif title -%}
+                SteinCode - {{ title }}
+            {%- else -%}
+                SteinCode
+            {%- endif -%}
+        </title>
+        
+        <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+        
+        {% if keywords %}
+            <meta name="keywords" content="{{ keywords }}">
+        {% endif %}
+        
+        <meta charset="utf-8">
+
+        <meta name="robots" content="index,follow">
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ '/assets/css/main.css' | url }}" rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="/">{% svg "logo.svg" %} SteinCode</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+
+                        <ul class="navbar-nav">
+                            {%- for entry in collections.all | eleventyNavigation %}
+                                <li class="nav-item">
+                                    <a href="{{ entry.url }}"class="nav-link {% if entry.url == page.url %}active" aria-current="page"{% else %}" {% endif %} class="nav-link">{{ entry.title }}</a>
+                                    </li>
+                            {%- endfor %}
+
+                            <li class="nav-item">
+                                <button type="button" class="btn btn-dark" id="dark-mode-button">
+                                    {% svg "fontawesome/lightbulb.svg" %}
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <script>
+            class DarkMode{
+                /*
+                * This dark mode toggle is heavily inspired by Codista's blog post on their theme implementation
+                * (https://www.codista.com/de/blog/neon-mode-building-new-dark-ui/).
+                * If you reading this Max or Thomas - thank you :)
+                */
+            
+                constructor() {
+                    this.cookieName = "darkModeIsEnabled"
+                }
+
+                setup() {
+                    this.set(this.getStatus())
+                }
+                
+                getStatus() {
+                    // check if the user has enabled dark mode via the set cookie,
+                    // if not fall back to media query for system defaults.
+                    const cookie = Cookies.get(this.cookieName);
+                    
+                    // Set color default to true, the light color-scheme is not ideal yet
+                    // const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+                    switch (cookie) {
+                        case "true":
+                            return true;
+                        case "false":
+                            return false;
+                        default:
+                            return true;
+                            // return systemPreference;
+                    }
+                }
+
+                set(darkModeIsEnabled){
+                    Cookies.set(this.cookieName, String(darkModeIsEnabled), {
+                        expires: this.cookieTimeoutDays,
+                    });
+                    console.log(this.getStatus())
+
+                    if (darkModeIsEnabled) {
+                        document.querySelector(":root").classList.add("dark-mode")
+
+                        document.querySelector("nav").classList.remove("navbar-light")
+                        document.querySelector("nav").classList.add("navbar-dark")
+                    } else {
+                        document.querySelector(":root").classList.remove("dark-mode")
+
+                        document.querySelector("nav").classList.add("navbar-light")
+                        document.querySelector("nav").classList.remove("navbar-dark")
+                    }
+                }
+                
+                toggle(){
+                    this.set(!this.getStatus())
+                }
+
+            }
+            
+            const darkMode = new DarkMode()
+            darkMode.setup()
+
+        </script>
+
+        <main class="container">
+            {{ content | safe }}
+        </main>
+
+        <footer id="footer-container">
+            <div class="footer-section">© <span id="copyright-year"></span></div>
+            <div class="footer-section"><a href="/privacy/">Privacy Policy</a></div>
+            <div class="footer-section"><a href="/impressum/">Imprint</a></div>
+            <div class="footer-section">Coded with <i class="fas fa-heart" style="color:red"></i> in Vienna 
+                <a class="repository-github-link" target="_blank" href="{{ links.repository }}" aria-label="website github repository"
+                ><i class="svg--small">{% svg "fontawesome/github.svg" %}</i></a></div>
+        </footer>
+        
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+        <script>
+            document.getElementById("dark-mode-button").addEventListener("click", () => {
+                document.getElementById("dark-mode-button").classList.toggle("active")
+                darkMode.toggle()
+            })
+
+            document.addEventListener("DOMContentLoaded", () => {
+                console.log("loaded")
+                document.getElementById("copyright-year").innerText = new Date().getFullYear();
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,10 @@
+# dependencies installed by npm
+node_modules
+
+# other dependencies and notes
+fontawesome-free-6.4.0-web
+drafts
+Blog-Ideen.md
+
+# build artefacts
+public_html

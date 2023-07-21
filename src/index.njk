@@ -1,0 +1,259 @@
+---
+layout: layouts/base.njk
+
+eleventyNavigation:
+  key: Home
+  order: 1
+---
+
+<section class="hero hero-mobile">
+    
+    <div class="hero-content-mobile">
+        <h1 class="hero-title">Eben<span class="highlighted-term">Stein</span></h1>
+        <h2 class="hero-subtitle">Software Development, Data Science, IT Management</h2>
+    </div>
+    
+</section>
+
+<section class="hero">
+    <div class="hero-animation">
+        <div class="hero-animation--text-area">
+            <div class="hero-animation--text-box">
+                <h1 class="hero-title">Eben<span class="highlighted-term">Stein</span></h1>
+                <h2 class="hero-subtitle">Software Development, Data Science, IT Management</h2>
+                <p>We are Irem and Thomas Ebenstein and in this blog we share our experiences and learnings of  
+                <a href="/about-us/" >our combined 10 years software development</a>. 
+                </p>
+
+            </div>
+            <div class="hero-animation-output-area hero-animation-flow-component">
+                <div class="hero-animation--output-data"></div>
+                <div class="hero-animation--output-line"></div>
+            </div>
+            
+        </div>
+        
+        <div class="hero-animation--dataflow-box">
+
+            <div class="hero-animation--dataflow-border-left"></div>
+            <div class="hero-animation--dataflow-content">
+                <table 
+                    aria-hidden="true"
+                    Tab-Index="-1"
+                    class="table table-borderless hero-animation--dataflow-table">
+                    <tbody>
+                        <tr>
+                            <td scope="col">1</td>
+                            <td scope="col">0</td>
+                            <td scope="col">3</td>
+                            <td scope="col">7</td>
+                            <td scope="col">2</td>
+                            <td scope="col">4</td>
+                            <td scope="col">8</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>7</td>
+                            <td>3</td>
+                            <td>9</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>3</td>
+                            <td class="blink">9</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>6</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>9</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td class="blink">2</td>
+                            <td>4</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>2</td>
+                            <td>8</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>5</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>9</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td class="blink">8</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>9</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>7</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-borderless hero-animation--dataflow-table">
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        const rows = 8
+        const cellsPerRow = 7
+        const numberOfBlinkingRows = 6
+
+        // Copy the first table to the second element for the infinite scroll
+        const firstTable = document.querySelector(".hero-animation--dataflow-table:first-child").innerHTML    
+        document.querySelector(".hero-animation--dataflow-table:last-child").innerHTML = firstTable
+        
+        const tables = Array.from(document.querySelectorAll(".hero-animation--dataflow-table"));
+
+        function getRandomCellIndices(){
+             const randomCellIndices = new Map();
+                
+            while (randomCellIndices.size < numberOfBlinkingRows) {
+                // Select random indices until 6 cells in 6 different rows are found 
+                const randomRow = Math.floor(Math.random() * rows)
+
+                if (!randomCellIndices.has(randomRow)) {
+                    randomCellIndices.set(randomRow, Math.floor(Math.random() * cellsPerRow))
+                }
+            }
+
+            return randomCellIndices
+        }
+
+        function updateCellBlinkState(cell, isBlinking){
+            if (isBlinking){
+                cell.classList.add("blink")
+            } else {
+                cell.classList.remove("blink")
+            }
+        }
+
+        function setRandomTableCellBlink(){
+            const newRandomTableCells = getRandomCellIndices()
+            const currentlyBlinkingCells = new Set()
+
+            for (const table of tables){
+                for (const [rowIndex, cellIndex] of newRandomTableCells.entries()) {
+                    // Select the appropriate cell
+                    // + 1 is needed since nth-child starts counting at 1
+                    const cell = table.querySelector(`tr:nth-child(${rowIndex + 1}) td:nth-child(${cellIndex + 1})`);
+                    
+                    updateCellBlinkState(cell, true)
+
+                    currentlyBlinkingCells.add(cell)
+                }
+            }
+
+            return currentlyBlinkingCells
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentlyBlinkingCells = setRandomTableCellBlink();
+
+            setInterval(() => {
+                // Remove the blink effect from the old cells
+                for (const cell of currentlyBlinkingCells){
+                    updateCellBlinkState(cell, false)
+                }
+                
+                currentlyBlinkingCells = setRandomTableCellBlink();
+            }, 1000)
+        })
+        
+    </script>
+</section>
+
+<section id="about-us">
+    <div class="row">
+    
+        <div class="col-lg-6 col-12 profile-card-column">
+            <div class="profile-card">
+                <div class="profile-card--header">
+
+                    <div class="profile-card-header-section">
+                        <img class="profile-card-image" src="./assets/img/profile/IremEbenstein_ProfilePicture_fin.jpg" alt="Profile Picture of Irem Ebenstein">
+                    </div>
+                    <div class="profile-card-header-section">
+
+                        <h2 class="profile-card-name"><a class="profile-card-header-link" href="{{ 'about-us' | url }}">Irem Eben<span class="highlighted-term">stein</span></a></h2>
+                        <p class="profile-occupation desktop">Senior Software Developer at Math-Up GmbH</p>
+                        <div class="social-media-links">
+                            <a class="social-media-link" href="mailto:{{ contact.email.irem }}" aria-label="email address of Irem Ebenstein">
+                                <i class="svg--medium">{% svg "fontawesome/square-envelope.svg" %}</i>
+                            </a>
+                            <a class="social-media-link" href="{{ contact.linkedin.irem }}" target="_blank" aria-label="Linkedin profile of Irem Ebenstein">
+                                <i class="svg--medium">{% svg "fontawesome/linkedin.svg" %}</i>
+                            </a>
+                            <a class="social-media-link" href="{{ contact.github.irem }}" target="_blank" aria-label="Github profile of Irem Ebenstein">
+                                <i class="svg--medium">{% svg "fontawesome/square-github.svg" %}</i>
+                            </a>
+                        </div>
+                        <a class="read-more-link-mobile" href="{{ 'about-us' | url }}#profile-card-irem-ebenstein">Read more ...</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-12 profile-card-column">
+            <div class="profile-card">
+                <div class="profile-card--header">
+                    <div class="profile-card-header-section">
+                        <img class="profile-card-image" src="./assets/img/profile/ThomasEbenstein_ProfilePicture_fin.jpg" alt="Profile Picture of Thomas Ebenstein">
+                    </div>
+
+                    <div class="profile-card-header-section">
+                        <h2 class="profile-card-name"><a class="profile-card-header-link" href="{{ 'about-us' | url }}">Thomas Eben<span class="highlighted-term">stein</span></a></h2>
+                        <p class="profile-occupation desktop">CTO of <a href="https://www.esgplus.com/team/" target="_blank">ESG Plus GmbH</a></p>
+                        <div class="social-media-links">
+                            <a class="social-media-link" href="mailto:{{ contact.email.thomas }}" aria-label="email address of Thomas Ebenstein">
+                                <i class="svg--medium">{% svg "fontawesome/square-envelope.svg" %}</i>
+                            </a>
+                            <a class="social-media-link" href="{{ contact.linkedin.thomas }}" target="_blank" aria-label="Linkedin profile of Thomas Ebenstein">
+                                <i class="svg--medium">{% svg "fontawesome/linkedin.svg" %}</i>
+                            </a>
+                            <a class="social-media-link" href="{{ contact.github.thomas }}" target="_blank" aria-label="Github profile of Thomas Ebenstein">
+                                <i class="svg--medium">{% svg "fontawesome/square-github.svg" %}</i>
+                            </a>
+                            <a class="social-media-link" href="{{ contact.xing.thomas }}" target="_blank" aria-label="Xing profile of Thomas Ebenstein">
+                                <i class="svg--medium">{% svg "fontawesome/square-xing.svg" %}</i>
+                            </a>
+                        </div>
+                        <a class="read-more-link-mobile" href="{{ 'about-us' | url }}#profile-card-thomas-ebenstein">Read more ...</span></a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+    
+</section>

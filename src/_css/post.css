@@ -1,0 +1,20 @@
+/* Post card */
+.posts-container {
+    min-height: 20vh;
+    padding-top: 1rem;
+}
+
+.post-card {
+    margin-bottom: 2rem;
+}
+
+/* In the post itself */
+.post-container {
+    display: flex;
+    justify-content: center;
+}
+
+.post-body {
+    max-width: 600px;
+}
+

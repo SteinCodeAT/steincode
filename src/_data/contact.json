@@ -1,0 +1,18 @@
+{
+    "email": {
+        "web": "web@steincode.com",
+        "thomas": "thomas.ebenstein@steincode.com",
+        "irem": "irem.ebenstein@steincode.com"
+    },
+    "github": {
+        "irem": "https://github.com/kalvintera",
+        "thomas": "https://github.com/kalvinter"
+    },
+    "linkedin": {
+        "irem": "https://at.linkedin.com/in/irem-ebenstein",
+        "thomas": "https://www.linkedin.com/in/thomasebenstein/"
+    },
+    "xing": {
+        "thomas": "https://www.xing.com/profile/Thomas_Ebenstein2"
+    }
+}
