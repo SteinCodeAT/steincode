@@ -101,6 +101,15 @@ section {
     height: 1.5rem;
 }
 
+.svg--text-bottom {
+    vertical-align: text-bottom;
+}
+
+.highlighted-term {
+    color: var(--main-highlight);
+    font-weight: bold;
+}
+
 /* Footer */
 #footer-container {
     margin-top: auto;
@@ -137,6 +146,10 @@ section {
     text-align: right;
 }
 
+#footer--heart-svg path {
+    fill: red
+}
+
 .repository-github-link svg {
     fill: var(--main-text);
 }
@@ -146,11 +159,6 @@ section {
       position: relative;
       bottom: auto;
     }
-}
-
-.highlighted-term {
-    color: var(--main-highlight);
-    font-weight: bold;
 }
 
 
