@@ -1,19 +1,20 @@
 const PostCSSPlugin = require("eleventy-plugin-postcss");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const sitemap = require("@quasibit/eleventy-plugin-sitemap");
-const cacheBuster = require('@mightyplow/eleventy-plugin-cache-buster');
 const { compress } = require('eleventy-plugin-compress');
 
 const fs = require("fs");
 
 const outputDir = "public_html"
 
-function getShortCommitHash(){
+function getCommitHash(){
   const command = "git rev-parse HEAD"
-  let hash = require('child_process').execSync(command).toString().trim()
-  console.log(hash)
-  return hash.slice(0, 6)
+  return require('child_process').execSync(command).toString().trim()
 }
+
+const currentCommitHash = getCommitHash()
+
+console.log("currentCommitHash: ", currentCommitHash)
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(PostCSSPlugin);
@@ -55,9 +56,12 @@ module.exports = function (eleventyConfig) {
     });
   });
 
-  eleventyConfig.addPlugin(cacheBuster({
-    outputDirectory: outputDir
-  }));
+  eleventyConfig.addFilter("bust_cache", (url) => {
+    const [urlPart, paramPart] = url.split("?");
+    const params = new URLSearchParams(paramPart || "");
+    params.set("v", currentCommitHash);
+    return `${urlPart}?${params}`;
+});
 
   /* 
   Disabled for now - it ignores css files for some reasons
