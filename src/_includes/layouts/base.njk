@@ -55,7 +55,7 @@
 
                             <li class="nav-item">
                                 <button type="button" class="btn btn-dark" id="dark-mode-button" role="switch" aria-label="dark mode toggle">
-                                    <i class="svg--medium">{% svg "fontawesome/lightbulb.svg" %}</i>
+                                    <i class="svg--small">{% svg "fontawesome/lightbulb.svg" %}</i>
                                 </button>
                             </li>
                         </ul>
@@ -85,8 +85,7 @@
                     // if not fall back to media query for system defaults.
                     const cookie = Cookies.get(this.cookieName);
                     
-                    // Set color default to true, the light color-scheme is not ideal yet
-                    // const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                    const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
                     switch (cookie) {
                         case "true":
@@ -94,8 +93,7 @@
                         case "false":
                             return false;
                         default:
-                            return true;
-                            // return systemPreference;
+                            return systemPreference;
                     }
                 }
 

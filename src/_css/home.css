@@ -125,7 +125,7 @@
 }
 
 .hero-animation--dataflow-border-left {
-    box-shadow: 0 0 .3rem 0.1rem var(--accent);
+    border-left: 2px solid var(--accent);
     margin-right: 1rem;
 }
 
@@ -173,8 +173,21 @@
 }
 
 /* Blink */
-
 @keyframes blinkColor {
+    0% {
+        text-shadow: none;
+    }
+
+    50% {
+        text-shadow: 0 0 1rem var(--accent);
+    }
+
+    100% {
+        text-shadow: none;
+    }
+}
+
+@keyframes blinkColorDark {
     0% {
         color: var(--accent);
         text-shadow: none;
@@ -193,6 +206,10 @@
 
 td.blink {
     animation: blinkColor 1s linear infinite;
+}
+
+:root.dark-mode td.blink {
+    animation: blinkColorDark 1s linear infinite;
 }
 
 /* Profile Cards */

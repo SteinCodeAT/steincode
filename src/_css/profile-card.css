@@ -7,9 +7,14 @@
     padding: 2rem;
     
     margin: auto;
-    border: 1px solid var(--main-text);
-    background: linear-gradient(0deg,#e8e8e8 1%,transparent);
+    background: linear-gradient(180deg,#e8e8e8 0%, #e8e8e8 75%, transparent 100%);
 }
+
+:root.dark-mode .profile-card {
+    border: 1px solid var(--accent);
+    background: linear-gradient(180deg,var(--main-bg) 0%,transparent);
+}
+
 
 .profile-card--header {
     display: grid;
@@ -43,11 +48,6 @@
 
 .profile-card--body--element:not(:last-of-type) {
     margin-bottom: 2rem;
-}
-
-:root.dark-mode .profile-card {
-    border: 1px solid var(--accent);
-    background: linear-gradient(0deg,var(--main-bg) 5%,transparent);
 }
 
 .profile-card .profile-card-header-section {
@@ -91,7 +91,7 @@
 }
 
 .social-media-link:hover {
-    background: none;
+    background: none !important;
     color: var(--accent);
     box-shadow: none;
 }
